@@ -1,8 +1,7 @@
-package ma.enset.ga.sma;
+package ma.enset.ga.mas;
 
 import jade.core.AID;
 import jade.core.Agent;
-import ma.enset.ga.sequencial.Individual;
 
 import java.util.ArrayList;
 import java.util.HashMap;

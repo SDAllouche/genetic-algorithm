@@ -1,4 +1,4 @@
-package ma.enset.ga.sma;
+package ma.enset.ga.mas;
 
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
