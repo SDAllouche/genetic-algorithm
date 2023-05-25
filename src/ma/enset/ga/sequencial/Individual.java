@@ -3,21 +3,21 @@ package ma.enset.ga.sequencial;
 import java.util.Random;
 
 public class Individual implements Comparable{
-    //Bonjour
-    //chromosome
-    private int genes[]=new int[10];
+
+    private char genes[]=new char[AGUtils.CHROMOSOME_SIZE];
     private int fitness;
 
     public Individual() {
         Random rnd=new Random();
         for (int i=0;i<genes.length;i++){
-            genes[i]= rnd.nextInt(2);
+            genes[i]= AGUtils.CHARATERS.charAt(rnd.nextInt(AGUtils.CHARATERS.length()));
         }
     }
     public void calculateFitness(){
         fitness=0;
-        for (int gene:genes) {
-                fitness+=gene;
+        for (int i=0;i<AGUtils.CHROMOSOME_SIZE;i++) {
+            if(genes[i]==AGUtils.SOLUTION.charAt(i))
+                fitness+=1;
         }
     }
 
@@ -25,8 +25,16 @@ public class Individual implements Comparable{
         return fitness;
     }
 
-    public int[] getGenes() {
+    public void setGenes(char[] genes) {
+        this.genes = genes;
+    }
+
+    public char[] getGenes() {
         return genes;
+    }
+
+    public void setFitness(int fitness) {
+        this.fitness = fitness;
     }
 
     @Override

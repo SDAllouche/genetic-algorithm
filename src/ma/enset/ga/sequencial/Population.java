@@ -8,13 +8,14 @@ public class Population {
     Individual firstFitness;
     Individual secondFitness;
     Random rnd=new Random();
+
     public void initialaizePopulation(){
-        for (int i=0;i<30;i++){
+        for (int i=0;i<AGUtils.POPULATION_SIZE;i++){
            individuals.add(new Individual());
         }
     }
     public void calculateIndFintess(){
-        for (int i=0;i<30;i++){
+        for (int i=0;i<AGUtils.POPULATION_SIZE;i++){
             individuals.get(i).calculateFitness();
         }
 
@@ -45,17 +46,13 @@ public class Population {
         individuals.set(individuals.size()-1,individual2);
     }
     public void mutation(){
-       int index=rnd.nextInt(6);
-       if(individuals.get(individuals.size()-2).getGenes()[index]==1){
-           individuals.get(individuals.size()-2).getGenes()[index]=0;
-       }else{
-           individuals.get(individuals.size()-2).getGenes()[index]=1;
-       }
-        index=rnd.nextInt(6);
-        if(individuals.get(individuals.size()-1).getGenes()[index]==1){
-            individuals.get(individuals.size()-1).getGenes()[index]=0;
-        }else{
-            individuals.get(individuals.size()-1).getGenes()[index]=1;
+        int index=rnd.nextInt(AGUtils.CHROMOSOME_SIZE);
+        if (rnd.nextDouble()<AGUtils.MUTATION_PROB){
+            individuals.get(individuals.size()-2).getGenes()[index]=AGUtils.CHARATERS.charAt(rnd.nextInt(AGUtils.CHARATERS.length()));
+        }
+        index=rnd.nextInt(AGUtils.CHROMOSOME_SIZE);
+        if (rnd.nextDouble()<AGUtils.MUTATION_PROB){
+            individuals.get(individuals.size()-1).getGenes()[index]=AGUtils.CHARATERS.charAt(rnd.nextInt(AGUtils.CHARATERS.length()));
         }
     }
 
