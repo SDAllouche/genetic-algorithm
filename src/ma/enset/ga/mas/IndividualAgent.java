@@ -77,6 +77,8 @@ public class IndividualAgent extends Agent {
     }
     private void  changeChromosome(ACLMessage receivedMSG){
         genes=receivedMSG.getContent().toCharArray();
+        mutation();
+        calculateFintess(receivedMSG);
     }
 
     @Override
