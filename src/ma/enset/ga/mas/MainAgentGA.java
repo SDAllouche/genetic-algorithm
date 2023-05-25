@@ -30,7 +30,7 @@ public class MainAgentGA extends Agent {
         dfAgentDescription.addServices(serviceDescription);
         try {
             DFAgentDescription[] agentsDescriptions = DFService.search(this, dfAgentDescription);
-            System.out.println(agentsDescriptions.length);
+            //System.out.println(agentsDescriptions.length);
             for (DFAgentDescription dfAD:agentsDescriptions) {
                 agentsFitness.add(new AgentFitness(dfAD.getName(),0));
             }
@@ -56,7 +56,7 @@ public class MainAgentGA extends Agent {
                     setAgentFintess(sender,fintess);
                     if(cpt== AGUtils.POPULATION_SIZE){
                         Collections.sort(agentsFitness,Collections.reverseOrder());
-                        showPopulation();
+                        //showPopulation();
                     }
                 }else {
                     block();
@@ -94,6 +94,8 @@ public class MainAgentGA extends Agent {
             }
 
             private void crossover(){
+
+
                 ACLMessage aclMessage1=blockingReceive();
                 ACLMessage aclMessage2=blockingReceive();
 
@@ -114,7 +116,7 @@ public class MainAgentGA extends Agent {
                     chromOffsring2[i]=chromParent1[i];
                 }
 
-                int fitness=0;
+                /*int fitness=0;
                 for (int i=0;i<AGUtils.CHROMOSOME_SIZE;i++) {
                     if(chromOffsring1[i]==AGUtils.SOLUTION.charAt(i))
                         fitness+=1;
@@ -122,7 +124,7 @@ public class MainAgentGA extends Agent {
 
                 agentsFitness.get(AGUtils.POPULATION_SIZE-2).setFitness(fitness);
 
-                /*fitness=0;
+                fitness=0;
                 for (int i=0;i<AGUtils.CHROMOSOME_SIZE;i++) {
                     if(chromOffsring2[i]==AGUtils.SOLUTION.charAt(i))
                         fitness+=1;
@@ -150,39 +152,38 @@ public class MainAgentGA extends Agent {
             }
         });
         addBehaviour(sequentialBehaviour);
-
     }
-    private void calculateFintness(){
+private void calculateFintness(){
 
-        //Send "fitness" message to other agents
-        ACLMessage message=new ACLMessage(ACLMessage.REQUEST);
+    //Send "fitness" message to other agents
+    ACLMessage message=new ACLMessage(ACLMessage.REQUEST);
 
-        for (AgentFitness agf:agentsFitness) {
-            message.addReceiver(agf.getAid());
-        }
-        message.setContent("fitness");
-        send(message);
-
+    for (AgentFitness agf:agentsFitness) {
+        message.addReceiver(agf.getAid());
     }
-    private void setAgentFintess(AID aid,int fitness){
-            for (int i=0;i<AGUtils.POPULATION_SIZE;i++){
-                if(agentsFitness.get(i).getAid().equals(aid)){
-                    agentsFitness.get(i).setFitness(fitness);
-                    break;
-                }
+    message.setContent("fitness");
+    send(message);
+
+}
+private void setAgentFintess(AID aid,int fitness){
+        for (int i=0;i<AGUtils.POPULATION_SIZE;i++){
+            if(agentsFitness.get(i).getAid().equals(aid)){
+                agentsFitness.get(i).setFitness(fitness);
+                break;
             }
-    }
-
-    public void sendMessage(AID aid, String contenet, int performative){
-        ACLMessage message=new ACLMessage(performative);
-        message.setContent(contenet);
-        message.addReceiver(aid);
-        send(message);
-    }
-
-    private void showPopulation(){
-        for (AgentFitness agentFitness:agentsFitness) {
-            System.out.println(agentFitness.getAid().getName()+" "+agentFitness.getFitness());
         }
+}
+
+public void sendMessage(AID aid, String contenet, int performative){
+    ACLMessage message=new ACLMessage(performative);
+    message.setContent(contenet);
+    message.addReceiver(aid);
+    send(message);
+}
+
+private void showPopulation(){
+    for (AgentFitness agentFitness:agentsFitness) {
+        System.out.println(agentFitness.getAid().getName()+" "+agentFitness.getFitness());
     }
+}
 }

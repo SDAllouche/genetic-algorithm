@@ -44,7 +44,7 @@ public class IndividualAgent extends Agent {
                         case "mutation":mutation();break;
                         case "fitness" : calculateFintess(receivedMSG);break;
                         case "chromosome":sendChromosome(receivedMSG);break;
-                        case "change chromosome":changeChromosome(receivedMSG);break;
+                        default: changeChromosome(receivedMSG);break;
                     }
                 }else {
                     block();
